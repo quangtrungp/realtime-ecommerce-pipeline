@@ -61,10 +61,12 @@ def main(n):
     print("Total events:", len(all_events))
     # Print events
     for event in all_events:
-        print(
-            event["event_type"],
-            event["payload"]
-        )
+        # print(
+        #     event["event_type"],
+        #     event["payload"]
+        # )
+        print(event)
+    return all_events
 
 
 if __name__ == "__main__":
