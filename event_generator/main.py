@@ -1,6 +1,12 @@
 
 from .order_generator import OrderGenerator
 from .payment_generator import PaymentGenerator
+from .fault_injector import (
+    inject_duplicates,
+    inject_late_events,
+    inject_invalid_events,
+    reorder_events
+)
 
 
 def main(n):
@@ -43,6 +49,16 @@ def main(n):
 
         all_events.append(final_event)
 
+    # Apply fault injection
+    all_events = inject_duplicates(all_events)
+
+    all_events = inject_late_events(all_events)
+
+    all_events = inject_invalid_events(all_events)
+
+    all_events = reorder_events(all_events)
+
+    print("Total events:", len(all_events))
     # Print events
     for event in all_events:
         print(
