@@ -1,0 +1,9 @@
+google-cloud-bigquery
+pandas
+SQLAlchemy
+psycopg2-binary
+boto3
+s3fs
+python-dotenv
+pyspark==4.2.0
+apache-airflow-providers-apache-spark==5.3.4

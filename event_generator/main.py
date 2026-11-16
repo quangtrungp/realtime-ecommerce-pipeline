@@ -3,7 +3,7 @@ from .order_generator import OrderGenerator
 from .payment_generator import PaymentGenerator
 
 
-def main():
+def main(n):
 
     order_generator = OrderGenerator()
 
@@ -16,7 +16,7 @@ def main():
     all_events = []
 
     # Generate 10 orders
-    for _ in range(1):
+    for _ in range(1,n+1):
 
         order_event = order_generator.generate_order()
 
@@ -52,4 +52,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(1)
