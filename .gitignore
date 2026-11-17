@@ -3,17 +3,12 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
-# === dbt (Chỉ push file code cấu hình, KHÔNG push file sinh ra khi chạy) ===
-database/dbt_for_tiki/target/
-database/dbt_for_tiki/dbt_packages/
-database/dbt_for_tiki/logs/
-
 # === Bảo mật & Cấu hình cá nhân ===
 .env
 *.env
-config/.user.yml
-config/tiki-project-508409-59360c98c8ba.json
 
 # === Hệ điều hành ===
 .DS_Store
 Thumbs.db
+
+infrastructure/minio/minio_data
