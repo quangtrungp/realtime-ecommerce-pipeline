@@ -12,3 +12,4 @@ __pycache__/
 Thumbs.db
 
 infrastructure/minio/minio_data
+infrastructure/spark/data/checkpoints
