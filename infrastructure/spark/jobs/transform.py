@@ -48,7 +48,7 @@ parsed_order = (
     .withColumn("event_time", to_timestamp("event_time")) # phai de vi can chuyen sang kdl timestamp
     .withWatermark("event_time", "10 minutes")
 )
-deup_order=parsed_order.dropDuplicates(["event_id"])
+dedup_order=parsed_order.dropDuplicates(["event_id"])
 
 parsed_payment = (
     payment_events
@@ -62,19 +62,18 @@ parsed_payment = (
     .withColumn("event_time", to_timestamp("event_time"))
     .withWatermark("event_time", "10 minutes")
 )
-deup_payment=parsed_payment.dropDuplicates(["event_id"])
+dedup_payment=parsed_payment.dropDuplicates(["event_id"])
 
 # 5. Select columns
-raw_order_df=deup_order.select(
-    col("order_id"),
-    col("user_id"),
+raw_order_df = dedup_order.select(
+    col("payload.order_id").alias("order_id"),
+    col("payload.user_id").alias("user_id"),
     col("event_id"),
-    F.explode_outer("items").alias("item"),
-    col("total_amount"),
-    col("currency"),
+    F.explode_outer("payload.items").alias("item"),
+    col("payload.total_amount").alias("total_amount"),
+    col("payload.currency").alias("currency"),
     col("event_type"),
-    col("event_time"),
-
+    col("event_time")
 )
 
 explode_item=raw_order_df.select(
@@ -91,19 +90,18 @@ explode_item=raw_order_df.select(
     
 )
 
-raw_payment_df=deup_payment.select(
-    col("payment_id"),
-    col("order_id"),
+raw_payment_df = dedup_payment.select(
+    col("payload.payment_id").alias("payment_id"),
+    col("payload.order_id").alias("order_id"),
     col("event_id"),
     col("event_time"),
     col("event_type"),
-    col("payment_method"),
-    col("amount"),
-    col("currency"),
-    col("status"),
-    col("failure_reason"),
-    col("refund_reason"),
-
+    col("payload.payment_method").alias("payment_method"),
+    col("payload.amount").alias("amount"),
+    col("payload.currency").alias("currency"),
+    col("payload.status").alias("status"),
+    col("payload.failure_reason").alias("failure_reason"),
+    col("payload.refund_reason").alias("refund_reason")
 )
 
 # 6. Filter
