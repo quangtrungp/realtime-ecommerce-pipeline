@@ -57,6 +57,11 @@ FROM spark:4.2.0-python3
 
 USER root
 
+# Install Python database dependencies
+RUN pip install --no-cache-dir \
+    psycopg2-binary \
+    SQLAlchemy
+
 # Existing MinIO/S3 and PostgreSQL dependencies
 COPY --from=storage-dependencies /hadoop-aws.jar /opt/spark/jars/hadoop-aws.jar
 COPY --from=storage-dependencies /aws-sdk-bundle.jar /opt/spark/jars/aws-sdk-bundle.jar
