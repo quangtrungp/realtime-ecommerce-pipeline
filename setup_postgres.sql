@@ -4,9 +4,9 @@
 create database ecommerce;
 
 ## create schema
-create schema ecommerce.staging;
+create schema staging;
 
-create schema ecommerce.analytics;
+create schema analytics;
 
 ## create table for staging
 CREATE TABLE IF NOT EXISTS staging.orders (
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS analytics.fact_order_items (
         REFERENCES analytics.dim_orders(order_id)
 );
 
-REATE TABLE IF NOT EXISTS analytics.fact_payments (
+CREATE TABLE IF NOT EXISTS analytics.fact_payments (
     payment_fact_key BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     payment_id       VARCHAR(100) NOT NULL,
     order_id         VARCHAR(100) NOT NULL,
@@ -369,8 +369,8 @@ BEGIN
         ON s.payment_id = dp.payment_id
         AND s.order_id = dp.order_id
 
-    INNER JOIN analytics.dim_orders AS do
-        ON dp.order_id = do.order_id
+    INNER JOIN analytics.dim_orders AS dor
+        ON dp.order_id = dor.order_id
 
     WHERE
         s.payment_id IS NOT NULL
